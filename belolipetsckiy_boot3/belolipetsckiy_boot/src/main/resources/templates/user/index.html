@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" th:src="@{js/main.js}" src="../static/js/"></script>
+
+
+
+
+
+    <title>Hello, world!</title>
+
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="navbar-brand" th:each="user1: ${users}"  th:text="${user1.getUsername}">Панель навигации</div>
+
+        <div class="navbar-brand">with roles</div>
+
+        <a class="navbar-brand"  th:each="role: ${roles}" th:text="${role.name}">Панель навигации</a>
+
+        <br/>
+        <a class="navbar-brand" th:href="@{/logout}">Панель навигации</a>
+
+
+
+    </nav>
+
+</head>
+<body>
+<h1>Users</h1>
+
+<div class="container">
+<div class="card">
+    <div class="card-block">
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Surname</th>
+        <th scope="col">Age</th>
+        <th scope="col">Email</th>
+        <th scope="col">Id</th>
+        <th scope="col">Role</th>
+        <th scope="col">Password</th>
+        <th scope="col">Edit</th>
+        <th scope="col">Delete</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr th:each="user, state : ${user}">
+        <td>
+            <a th:href="@{/user/{id}(id=${user.getId()})}"
+               th:text="${user.getUsername()}" >Name</a>
+        </td>
+        <td th:utext="${user.getSurname}">Surname</td>
+        <td th:utext="${user.getAge}">Age</td>
+        <td th:utext="${user.getEmail}">Email</td>
+        <td th:text="${user.getId()}">Id</td>
+        <td th:text="${user.toString()}">Role</td>
+        <td th:text="${user.getPassword()}">Password</td>
+        <td>
+
+        </td>
+        <td>
+            <form th:method="DELETE" th:action="@{/user/{id}(id=${user.getId()})}">
+                <input class="btn btn-danger" type="submit" value="Delete">
+            </form>
+        </td>
+        <td> <a th:href="@{user/findOne/{id}/(id=${user.id})}" class="btn btn-primary eBtn">Edit</a> </td>
+    </tr>
+
+    </tbody>
+</table>
+     <hr/>
+
+
+
+
+
+</div>
+</div>
+
+    <div class="myForm">
+        <form th:action="@{/user}" method="POST">
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Update or Create</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+
+                            <div class="mb-3">
+                                <label for="id" class="col-form-label">ID</label>
+                                <input type="text" class="form-control" id="id" name="id" value="" />
+                            </div>
+                        <div class="mb-3">
+                            <label for="username" class="col-form-label">Name</label>
+                            <input type="text" class="form-control" id="username" name="username" value="" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="surname" class="col-form-label">Surname</label>
+                            <input type="text" class="form-control" id="surname" name="surname" value="" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="age" class="col-form-label">Age</label>
+                            <input type="text" class="form-control" id="age" name="age" value="" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="email" class="col-form-label">Email</label>
+                            <input type="text" class="form-control" id="email" name="email" value="" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="password" class="col-form-label">Password</label>
+                            <input type="text" class="form-control" id="password" name="password" value="" />
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary"
+                                data-dismiss="modal" aria-label="Close">Close</button>
+                        <input type="submit" class="btn btn-primary" value="save" />
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+
+        </form>
+
+    </div>
+
+</div>
+<br/>
+<hr/>
+<a href="/user/new">Create new user</a>
+<br/>
+<a th:href="@{/logout}">Logout</a>
+
+
+
+
+<!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
+        crossorigin="anonymous"></script>
+
+<!-- Option 2: Separate Popper and Bootstrap JS -->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"
+        integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF"
+        crossorigin="anonymous"></script>
+
+</body>
+</html>
